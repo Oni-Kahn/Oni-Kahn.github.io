@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Upload</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js"></script>
+</head>
+<body>
+  <h1>Upload an Image</h1>
+
+  <!-- Image upload form -->
+  <input type="file" id="fileInput" accept="image/*">
+  <button onclick="uploadImage()">Upload Image</button>
+
+  <script>
+    // Firebase configuration object (replace with your own)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    // Function to upload the image
+    function uploadImage() {
+      const file = document.getElementById('fileInput').files[0];
+      if (!file) {
+        alert('Please select a file to upload');
+        return;
+      }
+
+      const storageRef = storage.ref('images/' + file.name);
+      const uploadTask = storageRef.put(file);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          console.error('Error during upload:', error);
+        },
+        () => {
+          console.log('Upload complete!');
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log('File available at', downloadURL);
+            alert('Upload complete! Check the console for the file URL.');
+          });
+        }
+      );
+    }
+  </script>
+</body>
+</html>
