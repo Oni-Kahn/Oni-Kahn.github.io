@@ -4,23 +4,13 @@ title: Home
 
 # Home
 
-## Introduction
+## Instructions
 
-**Bold Text**
-_Italic Text_
-**_Bold and Italic Text_**
+Please upload the image that you would like compressed. At the current time, we cannot accurately compress non-square image types so make sure that your image is AxA.
 
-## Research Question
+## Image Upload
 
-* Bullet Point 1
-* Bullet Point 2
-* Bullet Point 3
 
-## Background
-
-![image caption](https://idealab.asu.edu/assets/images/research/jumper1.png)
-
-[link to background](/background)
 
 ## Results
 
