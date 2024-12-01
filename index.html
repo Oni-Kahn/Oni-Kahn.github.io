@@ -13,6 +13,7 @@
   <!-- Image upload form -->
   <input type="file" id="fileInput" accept="image/*">
   <button onclick="uploadImage()">Upload Image</button>
+  <progress id="uploadProgress" value="0" max="100" style="width: 100%;"></progress>
 
   <script>
     // Firebase configuration object (replace with your own)
@@ -39,6 +40,7 @@
 
       const storageRef = storage.ref('images/' + file.name);
       const uploadTask = storageRef.put(file);
+      //progress bar
       const progressBar = document.getElementById('uploadProgress');
 
       uploadTask.on(
@@ -46,6 +48,7 @@
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           progressBar.value = progress;  // Update the progress bar
+          console.log('Upload is ' + progress + '% done');
         },
         (error) => {
           console.error('Error during upload:', error);
