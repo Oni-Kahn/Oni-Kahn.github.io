@@ -53,7 +53,33 @@
           //console.log('Upload is ' + progress + '% done');
         },
         (error) => {
+          let errorMessage = "An unknown error occurred."; 
+          switch (error.code) {
+            case 'storage/unauthorized':
+              errorMessage = "You don't have permission to upload this file.";
+              break;
+            case 'storage/canceled':
+              errorMessage = "The upload was canceled.";
+              break;
+            case 'storage/unknown':
+              errorMessage = "An unknown error occurred. Please check your internet connection."; 
+              break;
+            case 'storage/object-not-found':
+              errorMessage = "The file you're trying to upload was not found.";
+              break;
+            case 'storage/bucket-not-found':
+              errorMessage = "The storage bucket does not exist.";
+              break;
+            case 'storage/project-not-found':
+              errorMessage = "The Firebase project does not exist.";
+              break;
+            case 'storage/quota-exceeded':
+              errorMessage = "Your storage quota has been exceeded.";
+              break;
+            // Add more cases as needed for other specific errors
+          }
           console.error('Error uploading image: ', error);
+          alert(errorMessage);
         },
         () => {
           //console.log('Upload complete!');
